@@ -64,8 +64,8 @@ RUN \
         libpng-devel \
         libmcrypt-devel \
     && cd /usr/local/src \
-    && wget https://github.com/wangchuang-chn/docker-lnp/blob/master/soft/php-7.1.8.tar.gz -O php.tar.gz \
-    && tar xf php.tar.gz \
+    && wget https://github.com/wangchuang-chn/docker-lnp/blob/master/soft/php-${PHP_VERSION}.tar.gz  \
+    && tar xf php-${PHP_VERSION}.tar.gz \
     && cd php-$PHP_VERSION \
     && ./configure $PHP_PREFIX_CONFIG \
     && make\
