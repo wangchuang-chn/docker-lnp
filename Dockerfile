@@ -5,7 +5,7 @@ MAINTAINER wangchuang<mail.wangchuang@gmail.com>
 EXPOSE 80
 
 ENV NGINX_VERSION 1.10.0
-ENV PHP_VERSION 7.1.13
+ENV PHP_VERSION 7.1.8
 
 
 ENV NGINX_PREFIX_CONFIG "\
@@ -18,6 +18,22 @@ ENV NGINX_PREFIX_CONFIG "\
     --with-ipv6"
 
 
+ENV PHP_PREFIX_CONFIG "\
+    --prefix=/usr/local/php \
+    --enable-fpm \
+    --enable-mysqlnd \
+    --with-curl \
+    --with-openssl \
+    --with-mcrypt \
+    --enable-mbstring \
+    --with-gd \
+    --with-jpeg-dir=/usr/lib64  \
+    --with-png-dir \
+    --enable-zip \
+    --enable-bcmath"
+
+
+
 #install nginx
 RUN \
     yum -y install gcc-c++ \
@@ -25,6 +41,8 @@ RUN \
         curl \
         zlib-devel \
         pcre-devel \
+        wget \
+        epel-release \
     && cd /usr/local/src/ \
     && groupadd  nginx \
     && useradd  -s /sbin/nologin -g nginx nginx \
@@ -36,8 +54,36 @@ RUN \
     && make install \
     && cd / \
     && rm -rf /usr/local/src/* \
-    && ls -l /usr/local/nginx \
-    && /usr/local/nginx/sbin/nginx
+    && mkdir /usr/local/nginx/conf.d \
+    && rm -rf /usr/local/nginx/html \
+    #install php
+    && yum -y install libxml2-devel \
+        openssl-devel \
+        libcurl-devel \
+        libjpeg-devel \
+        libpng-devel \
+        libmcrypt-devel \
+    && cd /usr/local/src \
+    && wget https://github.com/wangchuang-chn/docker-lnp/blob/master/soft/php-7.1.8.tar.gz -O php.tar.gz \
+    && tar xf php.tar.gz \
+    && cd php-$PHP_VERSION \
+    && ./configure $PHP_PREFIX_CONFIG \
+    && make\
+    && make install \
+    && rm -rf /usr/local/src/* \
+    && cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf \
+    && cp /usr/local/php/etc/php-fpm.d/www.conf.default /usr/local/php/etc/php-fpm.d/www.conf \
+    && sed -i -e "s@user = nobody@user = nginx@g" /usr/local/php/etc/php-fpm.d/www.conf \
+    && sed -i -e "s@group = nobody@group = nginx@g" /usr/local/php/etc/php-fpm.d/www.conf \
+    && sed -i -e "s/listen = 127.0.0.1:9000/listen = \/var\/run\/php-fpm\.sock/g"  /usr/local/php/etc/php-fpm.d/www.conf \
+#clear
+    && yum clean all 
 
 
-#install php
+ADD nginx.conf /usr/local/nginx/conf/nginx.conf
+ADD nginx-site.conf /usr/local/nginx/conf.d/default.conf
+
+ADD start.sh /start.sh
+CMD ["/bin/sh", "/start.sh"]
+
+
