@@ -37,6 +37,7 @@ ENV PHP_PREFIX_CONFIG "\
 #install nginx
 RUN \
     yum -y install gcc-c++ \
+        git \
         make \
         curl \
         zlib-devel \
@@ -85,5 +86,4 @@ ADD nginx-site.conf /usr/local/nginx/conf.d/default.conf
 
 ADD start.sh /start.sh
 CMD ["/bin/sh", "/start.sh"]
-
 
