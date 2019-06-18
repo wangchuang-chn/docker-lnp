@@ -77,7 +77,8 @@ RUN \
     && sed -i -e "s@user = nobody@user = nginx@g" /usr/local/php/etc/php-fpm.d/www.conf \
     && sed -i -e "s@group = nobody@group = nginx@g" /usr/local/php/etc/php-fpm.d/www.conf \
     && sed -i -e "s/listen = 127.0.0.1:9000/listen = \/var\/run\/php-fpm\.sock/g"  /usr/local/php/etc/php-fpm.d/www.conf \
-#clear
+    && sed -i -e "s/;listen.owner = nobody/listen.owner = www/g" /usr/local/php/etc/php-fpm.d/www.conf \
+    && sed -i -e "s/;listen.group = nginx/;listen.group = www/g" /usr/local/php/etc/php-fpm.d/www.conf \
     && yum clean all 
 
 
@@ -86,4 +87,3 @@ ADD nginx-site.conf /usr/local/nginx/conf.d/default.conf
 
 ADD start.sh /start.sh
 CMD ["/bin/sh", "/start.sh"]
-
