@@ -82,8 +82,7 @@ RUN \
     && yum clean all \
     && echo 'PATH=/usr/local/php/bin:/usr/local/nginx/sbin/:$PATH' >> /etc/profile \
     && source /etc/profile \
-    && curl -sS https://getcomposer.org/installer | php \
-    && mv composer.phar /usr/local/bin/composer
+    && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 
 
