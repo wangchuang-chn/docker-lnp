@@ -80,8 +80,7 @@ RUN \
     && sed -i -e "s/;listen.owner = nobody/listen.owner = nginx/g" /usr/local/php/etc/php-fpm.d/www.conf \
     && sed -i -e "s/;listen.group = nginx/;listen.group = nginx/g" /usr/local/php/etc/php-fpm.d/www.conf \
     && yum clean all \
-    && echo 'PATH=/usr/local/php/bin:/usr/local/nginx/sbin/:$PATH' >> /etc/profile \
-    && source /etc/profile \
+    && ln -s /usr/local/php/bin/php /usr/bin/ \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 
