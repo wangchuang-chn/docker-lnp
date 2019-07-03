@@ -79,7 +79,12 @@ RUN \
     && sed -i -e "s/listen = 127.0.0.1:9000/listen = \/var\/run\/php-fpm\.sock/g"  /usr/local/php/etc/php-fpm.d/www.conf \
     && sed -i -e "s/;listen.owner = nobody/listen.owner = nginx/g" /usr/local/php/etc/php-fpm.d/www.conf \
     && sed -i -e "s/;listen.group = nginx/;listen.group = nginx/g" /usr/local/php/etc/php-fpm.d/www.conf \
-    && yum clean all 
+    && yum clean all \
+    && echo 'PATH="/usr/local/php/bin:/usr/local/nginx/sbin/":$PATH' >> /etc/profile \
+    && source /etc/profile \
+    && curl -sS https://getcomposer.org/installer | php \
+    && mv composer.phar /usr/local/bin/composer
+
 
 
 ADD nginx.conf /usr/local/nginx/conf/nginx.conf
