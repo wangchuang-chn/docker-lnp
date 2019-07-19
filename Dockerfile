@@ -72,8 +72,8 @@ RUN \
     && tar xf supervisor-3.4.0.tar.gz \
     && cd supervisor-3.4.0 \
     && python setup.py install \
-    && echo_supervisord_conf > /etc/supervisor.conf \
-    && echo -e "[include]\nfiles = /etc/supervisord/*.conf" >> /etc/supervisor.conf \
+    && echo_supervisord_conf > /etc/supervisord.conf \
+    && echo -e "[include]\nfiles = /etc/supervisord/*.conf" >> /etc/supervisord.conf \
     && mkdir /etc/supervisord/ \
     && cd /usr/local/src/php-$PHP_VERSION \
     && ./configure $PHP_PREFIX_CONFIG \
@@ -92,9 +92,9 @@ RUN \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
 
-
 ADD nginx.conf /usr/local/nginx/conf/nginx.conf
 ADD nginx-site.conf /usr/local/nginx/conf.d/default.conf
+
 
 ADD start.sh /start.sh
 CMD ["/bin/sh", "/start.sh"]
