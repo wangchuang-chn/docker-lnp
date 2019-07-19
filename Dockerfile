@@ -44,6 +44,7 @@ RUN \
         pcre-devel \
         wget \
         epel-release \
+        python-setuptools \
     && cd /usr/local/src/ \
     && groupadd  nginx \
     && useradd  -s /sbin/nologin -g nginx nginx \
@@ -67,9 +68,16 @@ RUN \
     && cd /usr/local/src \
     && wget https://github.com/wangchuang-chn/docker-lnp/raw/master/soft/php-${PHP_VERSION}.tar.gz  \
     && tar xf php-${PHP_VERSION}.tar.gz \
-    && cd php-$PHP_VERSION \
+    && wget https://files.pythonhosted.org/packages/19/0a/7eef85a26f8dfb585f312e4c6b76b0b16fe800ffce8a4724a7bda6ef440d/supervisor-3.4.0.tar.gz \
+    && tar xf supervisor-3.4.0.tar.gz \
+    && cd supervisor-3.4.0 \
+    && python setup.py install \
+    && echo_supervisord_conf > /etc/supervisor.conf \
+    && echo -e "[include]\nfiles = /etc/supervisord/*.conf" >> /etc/supervisor.conf \
+    && mkdir /etc/supervisord/ \
+    && cd /usr/local/src/php-$PHP_VERSION \
     && ./configure $PHP_PREFIX_CONFIG \
-    && make\
+    && make \
     && make install \
     && rm -rf /usr/local/src/* \
     && cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf \
