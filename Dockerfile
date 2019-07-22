@@ -79,6 +79,9 @@ RUN \
     && ./configure $PHP_PREFIX_CONFIG \
     && make \
     && make install \
+    && cp php.ini-production /usr/local/php/lib/php.ini \
+    && sed -i 's@memory_limit.*@memory_limit = 257M@g' /usr/local/php/lib/php.ini \
+    && sed -i 's@disable_functions.*@disable_functions =eval,passthru,system,chroot,chgrp,chown,shell_exec,error_log,ini_alter,ini_restore,dl,pfsockopen,syslog,readlink,stream_socket_server@g' /usr/local/php/lib/php.ini \
     && rm -rf /usr/local/src/* \
     && cp /usr/local/php/etc/php-fpm.conf.default /usr/local/php/etc/php-fpm.conf \
     && cp /usr/local/php/etc/php-fpm.d/www.conf.default /usr/local/php/etc/php-fpm.d/www.conf \
