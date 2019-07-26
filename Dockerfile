@@ -76,7 +76,6 @@ RUN \
     && echo_supervisord_conf > /etc/supervisord.conf \
     && echo -e "[include]\nfiles = /etc/supervisord/*.conf" >> /etc/supervisord.conf \
     && mkdir /etc/supervisord/ \
-    && supervisord -c /etc/supervisord.conf \
     && cd /usr/local/src/php-$PHP_VERSION \
     && ./configure $PHP_PREFIX_CONFIG \
     && make \
