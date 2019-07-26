@@ -30,6 +30,7 @@ ENV PHP_PREFIX_CONFIG "\
     --with-jpeg-dir=/usr/lib64  \
     --with-png-dir \
     --enable-zip \
+    --enable-pcntl \
     --enable-bcmath"
 
 
