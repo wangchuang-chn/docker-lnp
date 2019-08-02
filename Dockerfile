@@ -22,6 +22,7 @@ ENV PHP_PREFIX_CONFIG "\
     --prefix=/usr/local/php \
     --enable-fpm \
     --enable-mysqlnd \
+    --with-pdo-mysql \
     --with-curl \
     --with-openssl \
     --with-mcrypt \
