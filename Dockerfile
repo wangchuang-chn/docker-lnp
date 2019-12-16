@@ -99,6 +99,8 @@ RUN \
 
 ADD nginx.conf /usr/local/nginx/conf/nginx.conf
 ADD nginx-site.conf /usr/local/nginx/conf.d/default.conf
+ADD cloudflare.pem /usr/local/nginx/conf/ssl/cloudflare.pem
+ADD cloudflare.key /usr/local/nginx/conf/ssl/cloudflare.key
 
 
 ADD start.sh /start.sh
