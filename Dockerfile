@@ -3,6 +3,7 @@ FROM centos:7
 MAINTAINER wangchuang<mail.wangchuang@gmail.com>
 
 EXPOSE 80
+EXPOSE 443
 
 ENV NGINX_VERSION 1.10.0
 ENV PHP_VERSION 7.1.8
