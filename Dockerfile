@@ -49,6 +49,12 @@ RUN \
         wget \
         epel-release \
         python-setuptools \
+    && yum -y install libxml2-devel \
+        openssl-devel \
+        libcurl-devel \
+        libjpeg-devel \
+        libpng-devel \
+        libmcrypt-devel \
     && cd /usr/local/src/ \
     && groupadd  nginx \
     && useradd  -s /sbin/nologin -g nginx nginx \
@@ -63,12 +69,6 @@ RUN \
     && mkdir /usr/local/nginx/conf.d \
     && rm -rf /usr/local/nginx/html \
     #install php
-    && yum -y install libxml2-devel \
-        openssl-devel \
-        libcurl-devel \
-        libjpeg-devel \
-        libpng-devel \
-        libmcrypt-devel \
     && cd /usr/local/src \
     && wget https://github.com/wangchuang-chn/docker-lnp/raw/master/soft/php-${PHP_VERSION}.tar.gz  \
     && tar xf php-${PHP_VERSION}.tar.gz \
