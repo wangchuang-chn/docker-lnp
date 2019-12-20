@@ -16,7 +16,8 @@ ENV NGINX_PREFIX_CONFIG "\
     --with-http_realip_module \
     --with-http_gzip_static_module \
     --with-http_stub_status_module \
-    --with-ipv6"
+    --with-ipv6 \
+    --with-http_ssl_module"
 
 
 ENV PHP_PREFIX_CONFIG "\
