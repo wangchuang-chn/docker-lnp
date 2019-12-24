@@ -102,7 +102,7 @@ RUN \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer \
     && echo -e "HOME=/tmp\n* * * * *  /usr/local/php/bin/php /usr/share/nginx/html/artisan schedule:run >> /dev/null 2>&1" > /var/spool/cron/nginx \
     && echo -e "[program:ccshop]\nprocess_name=%(program_name)s_%(process_num)02d\ncommand= /usr/local/php/bin/php /usr/share/nginx/html/artisan queue:listen --tries=5 --timeout=0\nautostart=true\nautorestart=true\nnumprocs=2\nredirect_stderr=true\nuser=nginx\n" > /etc/supervisord/ccshop.conf \
-    && supervisord -c /etc/supervisord.conf \
+    && supervisord -c /etc/supervisord.conf 
 
 
 ADD nginx.conf /usr/local/nginx/conf/nginx.conf
