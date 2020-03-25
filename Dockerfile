@@ -34,7 +34,8 @@ ENV PHP_PREFIX_CONFIG "\
     --with-png-dir \
     --enable-zip \
     --enable-pcntl \
-    --enable-bcmath"
+    --enable-bcmath \
+    --with-zlib"
 
 
 
