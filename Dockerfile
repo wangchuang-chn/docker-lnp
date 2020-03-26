@@ -52,7 +52,6 @@ RUN \
         python-setuptools \
         vixie-cron \
         crontabs \
-        libzip-devel \
     && yum -y install libxml2-devel \
         openssl-devel \
         libcurl-devel \
