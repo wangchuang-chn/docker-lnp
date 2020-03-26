@@ -64,7 +64,8 @@ RUN \
     && tar -zxvf libzip-1.2.0.tar.gz \
     && cd libzip-1.2.0 \
     && ./configure \
-    && make && make install　\
+    && make \
+    && make install　\
     && cd /usr/local/src/ \
     && groupadd  nginx \
     && useradd  -s /sbin/nologin -g nginx nginx \
